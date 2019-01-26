@@ -1,0 +1,126 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\values-zh-rTW_values-zh-rTW.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\values-zh-rTW\\values-zh-rTW.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "50",
+                        "endOffsets": "101"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\values-ja_values-ja.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\values-ja\\values-ja.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "50",
+                        "endOffsets": "101"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\values-el_values-el.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\values-el\\values-el.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "47",
+                        "endOffsets": "98"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\values-zh-rHK_values-zh-rHK.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "50",
+                        "endOffsets": "101"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "52",
+                        "endOffsets": "103"
+                    }
+                },
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\values\\values.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "47",
+                        "endOffsets": "98"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "108",
+                        "endColumns": "47",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\values-zh-rCN_values-zh-rCN.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\values-zh-rCN\\values-zh-rCN.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "50",
+                        "endOffsets": "101"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\values-ko_values-ko.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\values-ko\\values-ko.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                }
+            ]
+        }
+    ]
+}

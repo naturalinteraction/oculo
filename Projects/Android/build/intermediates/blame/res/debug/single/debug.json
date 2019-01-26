@@ -1,0 +1,254 @@
+[
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_nav_arrow_down.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\nav_arrow_down.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_burgundy.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\burgundy.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_panel_square.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\panel_square.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_panel.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\panel.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_sv_panel_touch_up.wav.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\sv_panel_touch_up.wav"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_base_vert_small.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_base_vert_small.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_scrollbar_thumb_vert.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\scrollbar_thumb_vert.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_delete_dn.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\delete_dn.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_shift_up.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\shift_up.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_panel_hi.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\panel_hi.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_kbd_btn_dn.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\kbd_btn_dn.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_efigs_sdf.ktx.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\efigs_sdf.ktx"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_sound_assets.json.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\sound_assets.json"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_return_up.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\return_up.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_scrollbar_thumb_horz.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\scrollbar_thumb_horz.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_grey.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\grey.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_orange.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\orange.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_scrubber.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_scrubber.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_kbd_btn_up.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\kbd_btn_up.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor_dot_hi.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor_dot_hi.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor_circle_64x64.ktx.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor_circle_64x64.ktx"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_seablue.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\seablue.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_scrollbar_base_horz.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\scrollbar_base_horz.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_darkgreen.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\darkgreen.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_caret_hi.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_caret_hi.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor_hi.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor_hi.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_return_dn.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\return_dn.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_shift_dn.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\shift_dn.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_base_vert.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_base_vert.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_sv_panel_touch_down.wav.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\sv_panel_touch_down.wav"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor_cross_hi.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor_cross_hi.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor_hand.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor_hand.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_sv_focusgained.wav.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\sv_focusgained.wav"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_track_full_vert_small.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_track_full_vert_small.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_delete_up.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\delete_up.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_track_full_vert.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_track_full_vert.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_loading_indicator.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\loading_indicator.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\res\\drawable-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_swipe_suggestion_arrow_up.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\swipe_suggestion_arrow_up.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_efigs.fnt.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppFramework\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\efigs.fnt"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_space_up.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\space_up.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_track_vert.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_track_vert.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_swipe_suggestion_arrow_down.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\swipe_suggestion_arrow_down.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_caret.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_caret.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_sv_select.wav.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\sv_select.wav"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_bar.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_bar.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_purple.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\purple.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_mustard.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\mustard.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor_cross.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor_cross.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_qwerty_keyboard.json.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\qwerty_keyboard.json"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_default_keyboard_set.json.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\default_keyboard_set.json"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_track_vert_small.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_track_vert_small.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_charcoal.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\charcoal.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_space_dn.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\space_dn.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_gaze_cursor_dot.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\gaze_cursor_dot.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_field_normal.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\field_normal.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_sv_deselect.wav.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\sv_deselect.wav"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_slider_bubble_vert.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\slider_bubble_vert.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_symbols_keyboard.json.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\symbols_keyboard.json"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_panel_hi_square.tga.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\panel_hi_square.tga"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_scrollbar_base_vert.png.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\scrollbar_base_vert.png"
+    },
+    {
+        "merged": "C:\\ovr_sdk_mobile_1.20\\VrSamples\\VrController\\Projects\\Android\\build\\intermediates\\res\\merged\\debug\\raw_sv_release_active.wav.flat",
+        "source": "C:\\ovr_sdk_mobile_1.20\\VrAppSupport\\VrGUI\\Projects\\Android\\build\\intermediates\\packaged_res\\debug\\raw\\sv_release_active.wav"
+    }
+]
