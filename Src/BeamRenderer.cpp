@@ -97,7 +97,7 @@ void ovrBeamRenderer::Init( const int maxBeams, const bool depthTest )
 
 	Surf.surfaceName = "beams";
 	Surf.geo.Create( attr, indices );
-	Surf.geo.primitiveType = GL_TRIANGLES;
+	Surf.geo.primitiveType = GL_TRIANGLES;  // TODO
 	Surf.geo.indexCount = 0;
 
 	ovrGraphicsCommand & gc = Surf.graphicsCommand;
@@ -284,7 +284,7 @@ void ovrBeamRenderer::Frame( const ovrFrameInput & frame, const Matrix4f & cente
 	//Surf.graphicsCommand.GpuState.polygonMode = GL_LINE;
 	Surf.graphicsCommand.GpuState.cullEnable = false;
 	Surf.geo.indexCount = quadIndex * 6;
-	Surf.geo.Update( attr );
+	Surf.geo.Update( attr );  // TODO
 }
 
 //==============================

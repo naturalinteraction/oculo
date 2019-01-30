@@ -1368,7 +1368,8 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 
 			Matrix4f mat = Matrix4f( tracking.HeadPose.Pose );
 
-			// TODO: The pitch offset should only be applied to the Gear VR controller but should be baked into the model.
+			// TODO: The pitch offset should only be applied to the Gear VR controller but should
+			// be baked into the model.
 			float controllerPitch = DegreeToRad( 15.0f );
 #if defined( OVR_OS_ANDROID )
 			if ( trDevice.GetTrackedRemoteCaps().ControllerCapabilities & ovrControllerCaps_ModelOculusGo )

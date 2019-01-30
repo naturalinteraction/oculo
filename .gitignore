@@ -1,5 +1,6 @@
 Projects/Android/.idea
 Projects/Android/build/intermediates
+Projects/Android/build/outputs
 Projects/Android/android.debug.keystore
 Projects/Android/.externalNativeBuild
 Projects/Android/.gradle
