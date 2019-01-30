@@ -565,7 +565,6 @@ void ovrVrController::Configure( ovrSettings & settings )
 {
 	settings.CpuLevel = 2;
 	settings.GpuLevel = 2;
-
 	settings.RenderMode = RENDERMODE_MULTIVIEW;
 }
 
@@ -850,6 +849,15 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 	}
 
 	LastGamepadUpdateTimeInSeconds = 0.0;
+
+
+    ovrResult result = vrapi_SetDisplayRefreshRate(app->GetOvrMobile(), 72.0);
+    int modes_count = vrapi_GetSystemPropertyInt(app->GetJava(), VRAPI_SYS_PROP_NUM_SUPPORTED_DISPLAY_REFRESH_RATES);
+    float modes[100];
+    int howmany = vrapi_GetSystemPropertyFloatArray(app->GetJava(), VRAPI_SYS_PROP_SUPPORTED_DISPLAY_REFRESH_RATES, modes, 100);
+    OVR_LOG("modes_count %d result %d howmany %d", modes_count, result, howmany);
+    for (int i = 0; i < howmany; i++)
+        OVR_LOG("modes %d %f", i, modes[i]);
 }
 
 //==============================
