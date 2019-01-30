@@ -95,7 +95,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	}
 
 	Surface.geo.Create( attr, indices );
-	Surface.geo.primitiveType = GL_TRIANGLES;
+	Surface.geo.primitiveType = GL_POINTS;  // GL_LINES;  // TODO was GL_TRIANGLES
 	Surface.geo.indexCount = 0;
 
 	// initialize the rest of the surface 
@@ -105,7 +105,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	ovrGraphicsCommand & gc = Surface.graphicsCommand;
 
 	Texture = CreateRibbonTexture();
-#if 1
+#if 0  // TODO was 1 ; need to set 0 to see GL_POINTS
 	gc.UniformData[0].Data = &Texture;
 
 	ovrProgramParm parms[] =

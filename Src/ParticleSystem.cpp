@@ -445,7 +445,9 @@ void ovrParticleSystem::CreateGeometry( const int maxParticles )
 	}
 
 	SurfaceDef.geo.Create( attr, indices );
-	SurfaceDef.geo.indexCount = 0; // nothing to render until particles are added
+	// SurfaceDef.geo.primitiveType = GL_POINTS;
+	// ParticleSystem is the sprite drawn at the intersection of the beam with the panel, and at the elbow, wrist, hand
+    SurfaceDef.geo.indexCount = 0; // nothing to render until particles are added
 }
 
 } // namespace OVR

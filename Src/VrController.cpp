@@ -33,7 +33,7 @@ namespace OVR {
 #if defined( PERSISTENT_RIBBONS )
 static const int NUM_RIBBON_POINTS = 1024;
 #else
-static const int NUM_RIBBON_POINTS = 32;
+static const int NUM_RIBBON_POINTS = 8;  // TODO was 32
 #endif
 
 static const Vector4f LASER_COLOR( 0.0f, 1.0f, 1.0f, 1.0f );
@@ -806,7 +806,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 		SpriteAtlas->BuildSpritesFromGrid( 4, 2, 8 );
 
 		ParticleSystem = new ovrParticleSystem();
-		ParticleSystem->Init( 2048, *SpriteAtlas, ovrParticleSystem::GetDefaultGpuState(), false );
+		ParticleSystem->Init( 16/*2048*/, *SpriteAtlas, ovrParticleSystem::GetDefaultGpuState(), false );
 
 		BeamAtlas = new ovrTextureAtlas();
 		BeamAtlas->Init( app->GetFileSys(), "apk:///assets/beams.ktx" );
