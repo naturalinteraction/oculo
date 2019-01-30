@@ -36,8 +36,8 @@ static const char* ribbonFragmentShader = R"=====(
 	varying highp vec2 oTexCoord;
 	void main()
 	{
-		gl_FragColor = outColor * texture2D( Texture0, oTexCoord );
-		//gl_FragColor = outColor;
+		// gl_FragColor = outColor * texture2D( Texture0, oTexCoord );
+		gl_FragColor = outColor;
 	}
 )=====";
 //==============================================================================================
@@ -95,7 +95,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	}
 
 	Surface.geo.Create( attr, indices );
-	Surface.geo.primitiveType = GL_POINTS;  // GL_LINES;  // TODO was GL_TRIANGLES
+	Surface.geo.primitiveType = GL_TRIANGLES;  // GL_POINTS;  // GL_LINES;  // TODO was GL_TRIANGLES
 	Surface.geo.indexCount = 0;
 
 	// initialize the rest of the surface 
@@ -105,7 +105,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	ovrGraphicsCommand & gc = Surface.graphicsCommand;
 
 	Texture = CreateRibbonTexture();
-#if 0  // TODO was 1 ; need to set 0 to see GL_POINTS
+#if 0  // TODO was 1, set to 0 to disable texturing (as well as modifying the fragment shader
 	gc.UniformData[0].Data = &Texture;
 
 	ovrProgramParm parms[] =
