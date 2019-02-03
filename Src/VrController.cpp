@@ -385,9 +385,9 @@ static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 		count++;
 
 		Vector3f & curPoint = points.Get( i );
-        curPoint.x = anchorPos.x + 0.1 * count;
+        curPoint.x = anchorPos.x + 0.0 * count;
         curPoint.y = anchorPos.y + 0.0 * count;
-        curPoint.z = anchorPos.z + 0.0 * count;
+        curPoint.z = anchorPos.z + 0.1 * count;
     }
 
 OVR_LOG( "Ribbon: Updated %i points", count );
@@ -1383,7 +1383,7 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
                     pointerEnd = pointerStart + hit.RayDir * hit.t -
                                  pointerDir * 0.025f;//pointerDir * 0.15f;
                 } else {
-                    pointerEnd = pointerStart + pointerDir * 7.0f;//10.0
+                    pointerEnd = pointerStart + pointerDir * 10.0f;//10.0
                 }
             }
 			if ( Ribbons[trDevice.GetHand()] != nullptr && valli_count < 1)
