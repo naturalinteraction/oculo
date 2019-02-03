@@ -326,6 +326,8 @@ static const char * OculusTouchFragmentShaderSrc = R"(
 	}
 )";
 
+static int valli_count = 0;
+
 static void SetObjectColor( OvrGuiSys & guiSys, VRMenu * menu, char const * name, Vector4f const & color )
 {
 	VRMenuObject * obj = menu->ObjectForName( guiSys, name );
@@ -372,6 +374,7 @@ static void UpdateRibbon( ovrPointList & points, ovrPointList & velocities, cons
 {   // TODO UpdateRibbon
 	const Vector3f g( 0.0f, -9.8f, 0.0f );
 	const float invDeltaSeconds = 1.0f / deltaSeconds;
+    OVR_LOG("points is full %d", points.IsFull());
 
 	int count = 0;
 	int i = points.GetFirst();
@@ -420,7 +423,7 @@ static void UpdateRibbon( ovrPointList & points, ovrPointList & velocities, cons
 		prevPoint = curPoint;
 	}
 
-//	OVR_LOG( "Ribbon: Updated %i points", count );
+OVR_LOG( "Ribbon: Updated %i points", count );
 }
 #endif
 
@@ -442,7 +445,7 @@ ovrControllerRibbon::ovrControllerRibbon( const int numPoints, const float width
 
 	for ( int i = 0; i < numPoints; ++i )
 	{
-		Points->AddToTail( Vector3f( 0.0f, i * ( length / numPoints ), 0.0f ) );
+		Points->AddToTail( Vector3f( i * ( length / numPoints ), 0.0f, 0.0f ) );  // was on Y
 		Velocities->AddToTail( Vector3f( 0.0f ) );
 	}
 #endif
@@ -464,6 +467,11 @@ ovrControllerRibbon::~ovrControllerRibbon()
 // ovrControllerRibbon::Update
 void ovrControllerRibbon::Update( const Matrix4f & centerViewMatrix, const Vector3f & anchorPos, const float deltaSeconds )
 {
+    OVR_LOG("anchorPos %.1f, %.1f, %.1f", anchorPos.x, anchorPos.y, anchorPos.z);
+    Vector3f anchorPos_forced;
+    anchorPos_forced.x = 1.0;      // 0.0 is more of less in front of the user eyes, positive to the right
+    anchorPos_forced.y = 1.675;     // check eye height 1.675000 is in front of the user eyes
+    anchorPos_forced.z = -1.0;     // user is in 0.0, positive values are behind viewer
 	OVR_ASSERT( Points != nullptr );
 #if defined( PERSISTENT_RIBBONS )
 	if ( Points->GetCurPoints() == 0 )
@@ -484,7 +492,7 @@ void ovrControllerRibbon::Update( const Matrix4f & centerViewMatrix, const Vecto
 	}
 #else
 	OVR_ASSERT( Velocities != nullptr );
-	UpdateRibbon( *Points, *Velocities, anchorPos, Length / Points->GetMaxPoints(), deltaSeconds );
+	UpdateRibbon( *Points, *Velocities, anchorPos_forced, Length / Points->GetMaxPoints(), deltaSeconds );
 #endif
 	Ribbon->Update( *Points, centerViewMatrix, true );
 }
@@ -819,8 +827,10 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 
 		for ( int i = 0; i < ovrArmModel::HAND_MAX; ++i )
 		{
-		    OVR_LOG("CREATE RIBBON %d", i);
-			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 0.0f, 0.5f, 1.0f, 1.0f ) );
+		    OVR_LOG("CREATE RIBBON %d", i);     // how many          width   length          color
+		    // there is not only one, probably there's two, left and right hand
+		    // in my case the dominant hand is the right (1)
+			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 0.0f, 0.0f, 1.0f, 1.0f ) );
 		}
 
 		//------------------------------------------------------------------------------------------
@@ -832,7 +842,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 			GuiSys->OpenMenu( Menu->GetName() );
 
 			OVR::Posef pose = Menu->GetMenuPose();
-			pose.Translation = Vector3f( 0.0f, 1.0f, -2.0f );
+			pose.Translation = Vector3f( 0.0f, 1.8f, -2.0f );
 			Menu->SetMenuPose( pose );
 
 			const ovrDeviceType deviceType = ( ovrDeviceType )app->GetSystemProperty( VRAPI_SYS_PROP_DEVICE_TYPE );
@@ -1086,9 +1096,9 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 				float roll;
 				Quatf r( hmtTracking.HeadPose.Pose.Orientation );
 				r.GetEulerAngles< Axis_Y, Axis_X, Axis_Z >( &yaw, &pitch, &roll );
-				//OVR_LOG_WITH_TAG( "HMTPose", "Pose.r = ( %.2f, %.2f, %.2f, %.2f ), ypr( %.2f, %.2f, %.2f )",
-				//		r.x, r.y, r.z, r.w,
-				//		MATH_FLOAT_RADTODEGREEFACTOR * yaw, MATH_FLOAT_RADTODEGREEFACTOR* pitch, MATH_FLOAT_RADTODEGREEFACTOR * roll );
+				OVR_LOG_WITH_TAG( "HMTPose", "Pose.r = ( %.2f, %.2f, %.2f, %.2f ), ypr( %.2f, %.2f, %.2f )",
+						r.x, r.y, r.z, r.w,
+						MATH_FLOAT_RADTODEGREEFACTOR * yaw, MATH_FLOAT_RADTODEGREEFACTOR* pitch, MATH_FLOAT_RADTODEGREEFACTOR * roll );
 
 				ovrInputStateHeadset headsetInputState;
 				headsetInputState.Header.ControllerType = ovrControllerType_Headset;
@@ -1154,10 +1164,10 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 				float roll;
 				Quatf r( remoteTracking.HeadPose.Pose.Orientation );
 				r.GetEulerAngles< Axis_Y, Axis_X, Axis_Z >( &yaw, &pitch, &roll );
-				//OVR_LOG_WITH_TAG( "MLBUPose", "Pose.r = ( %.2f, %.2f, %.2f, %.2f ), ypr( %.2f, %.2f, %.2f ), t( %.2f, %.2f, %.2f )",
-				//	r.x, r.y, r.z, r.w,
-				//	MATH_FLOAT_RADTODEGREEFACTOR * yaw, MATH_FLOAT_RADTODEGREEFACTOR * pitch, MATH_FLOAT_RADTODEGREEFACTOR * roll,
-				//	remoteTracking.HeadPose.Pose.Position.x, remoteTracking.HeadPose.Pose.Position.y, remoteTracking.HeadPose.Pose.Position.z );
+				OVR_LOG_WITH_TAG( "MLBUPose", "Pose.r = ( %.2f, %.2f, %.2f, %.2f ), ypr( %.2f, %.2f, %.2f ), t( %.2f, %.2f, %.2f )",
+					r.x, r.y, r.z, r.w,
+					MATH_FLOAT_RADTODEGREEFACTOR * yaw, MATH_FLOAT_RADTODEGREEFACTOR * pitch, MATH_FLOAT_RADTODEGREEFACTOR * roll,
+					remoteTracking.HeadPose.Pose.Position.x, remoteTracking.HeadPose.Pose.Position.y, remoteTracking.HeadPose.Pose.Position.z );
 
 				result = PopulateRemoteControllerInfo( trDevice, recenteredController );
 				if ( result == ovrSuccess )
@@ -1369,6 +1379,7 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 			if ( ( trDevice.GetTrackedRemoteCaps().ControllerCapabilities & ovrControllerCaps_HasPositionTracking ) == 0 )
 			{
 #endif
+			    OVR_LOG("eye height %f", vrFrame.EyeHeight);
 				Posef neckPose( Quatf(), Vector3f( 0.0f, vrFrame.EyeHeight, 0.0f ) );
 				RenderBones( vrFrame, ParticleSystem, *SpriteAtlas, 0, RemoteBeamRenderer, *BeamAtlas, 0,
 					neckPose, armModel.GetTransformedJoints(), trDevice.GetJointHandles() );
@@ -1417,9 +1428,10 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
                     pointerEnd = pointerStart + pointerDir * 10.0f;
                 }
             }
-			if ( Ribbons[trDevice.GetHand()] != nullptr )
-			{
-				Ribbons[trDevice.GetHand()]->Update( res.FrameMatrices.CenterView,
+			if ( Ribbons[trDevice.GetHand()] != nullptr && valli_count <= NUM_RIBBON_POINTS * 12)
+			{   valli_count++;
+			    OVR_LOG("ribboned handedness is %d valli_count %d", trDevice.GetHand(), valli_count);
+				Ribbons[1/*trDevice.GetHand()*/]->Update( res.FrameMatrices.CenterView,
 					ovrMatrix4f_GetTranslation( mat ),
 					vrFrame.DeltaSeconds );
 			}

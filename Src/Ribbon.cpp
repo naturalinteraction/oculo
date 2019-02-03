@@ -143,7 +143,7 @@ ovrRibbon::~ovrRibbon()
 
 void ovrRibbon::AddPoint( ovrPointList & pointList, const ovrVector3f & point )
 {
-	//OVR_LOG( "Ribbon: AddPoint" );
+	OVR_LOG( "Ribbon: AddPoint" );  // it seems like this never gets called
 	if ( pointList.IsFull() )
 	{
 		return;
