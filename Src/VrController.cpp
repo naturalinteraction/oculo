@@ -749,7 +749,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 				modelOffset.x = 0.5f;
 				modelOffset.y = 0.0f;
 				modelOffset.z = -2.25f;
-				Scene.GetWorldModel()->State.SetMatrix( Matrix4f::Scaling( 2.5f, 2.5f, 2.5f ) * Matrix4f::Translation( modelOffset ) );
+				Scene.GetWorldModel()->State.SetMatrix( /*Matrix4f::Scaling( 2.5f, 2.5f, 2.5f ) * */ Matrix4f::Translation( modelOffset ) );
 			}
 		}
 
@@ -776,7 +776,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 		    OVR_LOG("CREATE RIBBON %d", i);     // how many          width   length          color
 		    // there is not only one, probably there's two, left and right hand
 		    // in my case the dominant hand is the right (1)
-			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 1.0f, 0.0f, 0.0f, 1.0f ) );
+			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 0.0f, 0.0f, 0.0f, 1.0f ) );
             Ribbons[i/*trDevice.GetHand()*/]->Update();
 		}
 
@@ -872,7 +872,7 @@ bool ovrVrController::OnKeyEvent( const int keyCode, const int repeatCount, cons
 	}
 	return false;
 }
-
+/*
 static void RenderBones( const ovrFrameInput & frame, ovrParticleSystem * ps, ovrTextureAtlas & particleAtlas,
 		const uint16_t particleAtlasIndex, ovrBeamRenderer * br, ovrTextureAtlas & beamAtlas, const uint16_t beamAtlasIndex,
 		const Posef & worldPose, const Array< ovrJoint > & joints,
@@ -911,7 +911,7 @@ static void RenderBones( const ovrFrameInput & frame, ovrParticleSystem * ps, ov
 		}
 	}
 }
-
+*/
 static void ResetBones( ovrParticleSystem * ps, ovrBeamRenderer * br, jointHandles_t & handles )
 {
     for ( int i = 0; i < handles.GetSizeI(); ++i )
@@ -1338,9 +1338,9 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 			{
 #endif
 			    OVR_LOG("eye height %f", vrFrame.EyeHeight);
-				Posef neckPose( Quatf(), Vector3f( 0.0f, vrFrame.EyeHeight, 0.0f ) );
-				RenderBones( vrFrame, ParticleSystem, *SpriteAtlas, 0, RemoteBeamRenderer, *BeamAtlas, 0,
-					neckPose, armModel.GetTransformedJoints(), trDevice.GetJointHandles() );
+				///Posef neckPose( Quatf(), Vector3f( 0.0f, vrFrame.EyeHeight, 0.0f ) );
+				///RenderBones( vrFrame, ParticleSystem, *SpriteAtlas, 0, RemoteBeamRenderer, *BeamAtlas, 0,
+				///	neckPose, armModel.GetTransformedJoints(), trDevice.GetJointHandles() );
 #if defined( OVR_OS_ANDROID )
 			}
 #endif
@@ -1472,26 +1472,35 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 
 //		ParticleSystem->AddParticle( vrFrame, pointerStart_NoWrist, 0.0f, Vector3f( 0.0f ), Vector3f( 0.0f ),
 //				Vector4f( 0.0f, 1.0f, 1.0f, 1.0f ), ovrEaseFunc::ALPHA_IN_OUT_LINEAR, 0.0f, 0.025f, 0.5f, 0 );
-		ParticleSystem->AddParticle( vrFrame, pointerStart, 0.0f, Vector3f( 0.0f ), Vector3f( 0.0f ),
-				Vector4f( 0.0f, 1.0f, 0.0f, 0.5f ), ovrEaseFunc::ALPHA_IN_OUT_LINEAR, 0.0f, 0.025f, 0.05f, 0 );
+        // pallino verde in cima al controller
+		// ParticleSystem->AddParticle( vrFrame, pointerStart, 0.0f, Vector3f( 0.0f ), Vector3f( 0.0f ),
+		//  		Vector4f( 0.0f, 1.0f, 0.0f, 0.5f ), ovrEaseFunc::ALPHA_IN_OUT_LINEAR, 0.0f, 0.025f, 0.05f, 0 );
 	}
 	else
 	{
         ResetLaserPointer();
 	}
 
+	// disegna il ribbon prima della gui
+    Ribbons[0]->Ribbon->GenerateSurfaceList( res.Surfaces );
+
 	GuiSys->Frame( vrFrame, res.FrameMatrices.CenterView, traceMat );
 
 	// since we don't delete any lines, we don't need to run its frame at all
+	// disegna il beam
 	RemoteBeamRenderer->Frame( vrFrame, app->GetLastViewMatrix(), *BeamAtlas );
+	// disegna i pallini delle mani, polso, e il pallino di intersezione del beam con la gui
 	ParticleSystem->Frame( vrFrame, *SpriteAtlas, res.FrameMatrices.CenterView );
 
+	// disegna il pannello con scritte e tasti, se non lo si disegna blocca comunque il beam
 	GuiSys->AppendSurfaceList( res.FrameMatrices.CenterView, &res.Surfaces );
 
 	// add the controller model surfaces to the list of surfaces to render
 	for ( int i = 0; i < (int)InputDevices.size(); ++i )
 	{
-		ovrInputDeviceBase * device = InputDevices[i];
+        OVR_LOG("XXX input device %d", i);  // solo device 0
+
+        ovrInputDeviceBase * device = InputDevices[i];
 		if ( device == nullptr )
 		{
 			OVR_ASSERT( false );	// this should never happen!
@@ -1508,7 +1517,8 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 		{
 			if ( surface.surface != nullptr )
 			{
-				res.Surfaces.PushBack( surface );
+			    OVR_LOG("XXX controller surface");
+				res.Surfaces.PushBack( surface );  // una sola
 			}
 		}
 		
@@ -1518,10 +1528,13 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 		}
 	}
 
-    Ribbons[0]->Ribbon->GenerateSurfaceList( res.Surfaces );
+	// disegna il ribbon dopo il controller
+    //Ribbons[0]->Ribbon->GenerateSurfaceList( res.Surfaces );
 
 	const Matrix4f projectionMatrix;
+	// anche se levo questo spariscono i joint
 	ParticleSystem->RenderEyeView( res.FrameMatrices.CenterView, projectionMatrix, res.Surfaces );
+	// anche se levo questo sparisce il beam
 	RemoteBeamRenderer->RenderEyeView( res.FrameMatrices.CenterView, projectionMatrix, res.Surfaces );
 
 	return res;
