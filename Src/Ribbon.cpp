@@ -269,6 +269,7 @@ void ovrRibbon::Update( const ovrPointList & pointList, const bool invertAlpha )
 
 void ovrRibbon::GenerateSurfaceList( Array< ovrDrawSurface > & surfaceList ) const
 {
+    // OVR_LOG("ovrRibbon::GenerateSurfaceList");
 	if ( Surface.geo.indexCount == 0 )
 	{
 		return;

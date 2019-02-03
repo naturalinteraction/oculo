@@ -15,8 +15,6 @@ Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All
 #include "GazeCursor.h"
 #include "ControllerGUI.h"
 
-//#define PERSISTENT_RIBBONS
-
 extern "C" {
 
 jlong Java_com_oculus_vrcontroller_MainActivity_nativeSetAppInterface( JNIEnv * jni, jclass clazz, jobject activity,
@@ -30,11 +28,7 @@ jlong Java_com_oculus_vrcontroller_MainActivity_nativeSetAppInterface( JNIEnv * 
 
 namespace OVR {
 
-#if defined( PERSISTENT_RIBBONS )
-static const int NUM_RIBBON_POINTS = 1024;
-#else
 static const int NUM_RIBBON_POINTS = 8;  // To-Do was 32
-#endif
 
 static const Vector4f LASER_COLOR( 0.0f, 1.0f, 1.0f, 1.0f );
 
@@ -369,7 +363,7 @@ static inline Vector3f ovrMatrix4f_GetTranslation( const ovrMatrix4f & matrix )
 	return t;
 }
 */
-#if !defined( PERSISTENT_RIBBONS )
+
 static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 {   // TODO UpdateRibbon
 	int count = 0;
@@ -398,7 +392,6 @@ static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 
 OVR_LOG( "Ribbon: Updated %i points", count );
 }
-#endif
 
 //==============================================================================================
 // ovrControllerRibbon
@@ -410,9 +403,6 @@ ovrControllerRibbon::ovrControllerRibbon( const int numPoints, const float width
 	, Length( length )
 {
 	// TODO ribbon creation
-#if defined( PERSISTENT_RIBBONS )
-	Points = new ovrPointList_Circular( numPoints );
-#else
 	Points = new ovrPointList_Vector( numPoints );
 	Velocities = new ovrPointList_Vector( numPoints );
 
@@ -421,7 +411,6 @@ ovrControllerRibbon::ovrControllerRibbon( const int numPoints, const float width
 		Points->AddToTail( Vector3f( i * ( length / numPoints ), 0.0f, 0.0f ) );  // was on Y
 		Velocities->AddToTail( Vector3f( 0.0f ) );
 	}
-#endif
 
 	Ribbon = new ovrRibbon( *Points, width, color );
 }
@@ -446,27 +435,9 @@ void ovrControllerRibbon::Update()
     anchorPos_forced.y = 1.675;     // check eye height 1.675000 is in front of the user eyes
     anchorPos_forced.z = -1.0;     // user is in 0.0, positive values are behind viewer
 	OVR_ASSERT( Points != nullptr );
-#if defined( PERSISTENT_RIBBONS )
-	if ( Points->GetCurPoints() == 0 )
-	{
-		Points->AddToTail( anchorPos );
-	}
-	else
-	{
-		Vector3f delta = anchorPos - Points->Get( Points->GetLast());
-		if ( delta.Length() > 0.01f )
-		{
-			if ( Points->IsFull() )
-			{
-				Points->RemoveHead();
-			}
-			Points->AddToTail( anchorPos );
-		}
-	}
-#else
+
 	OVR_ASSERT( Velocities != nullptr );
 	UpdateRibbon( *Points, anchorPos_forced);
-#endif
 	Ribbon->Update( *Points, true );
 }
 
@@ -846,6 +817,17 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
     OVR_LOG("modes_count %d result %d howmany %d", modes_count, result, howmany);
     for (int i = 0; i < howmany; i++)
         OVR_LOG("modes %d %f", i, modes[i]);
+
+	bool fove = vrapi_GetSystemPropertyInt(app->GetJava(), VRAPI_SYS_PROP_FOVEATION_AVAILABLE);
+    OVR_LOG("fove %d", fove);
+    if (fove == VRAPI_TRUE)
+    {
+        vrapi_SetPropertyInt(app->GetJava(), VRAPI_FOVEATION_LEVEL, 0);  // 3
+        // 0 disables multi-resolution
+        // 1 low FFR setting
+        // 2 medium FFR setting
+        // 3 high FFR setting
+    }
 }
 
 //==============================
@@ -1532,9 +1514,11 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 		
 		if ( i == 0/*Ribbons[trDevice.GetHand()] != nullptr*/ )
 		{
-			Ribbons[0/*trDevice.GetHand()*/]->Ribbon->GenerateSurfaceList( res.Surfaces );
-		}		
+			// Ribbons[0/*trDevice.GetHand()*/]->Ribbon->GenerateSurfaceList( res.Surfaces );
+		}
 	}
+
+    Ribbons[0]->Ribbon->GenerateSurfaceList( res.Surfaces );
 
 	const Matrix4f projectionMatrix;
 	ParticleSystem->RenderEyeView( res.FrameMatrices.CenterView, projectionMatrix, res.Surfaces );
