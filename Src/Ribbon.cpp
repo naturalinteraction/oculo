@@ -125,8 +125,8 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 
 	ovrGpuState & gpu = gc.GpuState;	
 	gpu.depthEnable = true;
-	gpu.depthMaskEnable = false;
-	gpu.blendEnable = ovrGpuState::BLEND_ENABLE;
+	gpu.depthMaskEnable = true;
+    gpu.blendEnable = ovrGpuState::BLEND_ENABLE;
 	gpu.blendSrc = GL_SRC_ALPHA;
 	gpu.blendDst = GL_ONE_MINUS_SRC_ALPHA;
 	gpu.blendSrcAlpha = GL_SRC_ALPHA;
@@ -211,7 +211,7 @@ void ovrRibbon::Update( const ovrPointList & pointList, const bool invertAlpha )
 	// Vector3f edgeDir = getEdgeDir2( eyeFwd, *curPoint, *nextPoint );
 	// float alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
 
-	Vector3f edgeDir(1.0, 1.0, -1.0);
+	Vector3f edgeDir(0.0, 1.0, 0.0);
 	edgeDir = edgeDir.Normalized();
 	float alpha = 1.0;
 

@@ -386,8 +386,8 @@ static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 
 		Vector3f & curPoint = points.Get( i );
         curPoint.x = anchorPos.x + 0.1 * count;
-        curPoint.y = anchorPos.y + 0.1 * count;
-        curPoint.z = anchorPos.z + 0.1 * count;
+        curPoint.y = anchorPos.y + 0.0 * count;
+        curPoint.z = anchorPos.z + 0.0 * count;
     }
 
 OVR_LOG( "Ribbon: Updated %i points", count );
@@ -408,7 +408,7 @@ ovrControllerRibbon::ovrControllerRibbon( const int numPoints, const float width
 
 	for ( int i = 0; i < numPoints; ++i )
 	{
-		Points->AddToTail( Vector3f( i * ( length / numPoints ), 0.0f, 0.0f ) );  // was on Y
+		Points->AddToTail( Vector3f( 0.0f, i * ( length / numPoints ), 0.0f ) );  // was on Y
 		Velocities->AddToTail( Vector3f( 0.0f ) );
 	}
 
@@ -776,7 +776,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 		    OVR_LOG("CREATE RIBBON %d", i);     // how many          width   length          color
 		    // there is not only one, probably there's two, left and right hand
 		    // in my case the dominant hand is the right (1)
-			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 0.0f, 0.0f, 0.0f, 1.0f ) );
+			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.5f, 1.0f, Vector4f( 0.3f, 0.3f, 0.5f, 1.0f ) );
             Ribbons[i/*trDevice.GetHand()*/]->Update();
 		}
 
@@ -1383,7 +1383,7 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
                     pointerEnd = pointerStart + hit.RayDir * hit.t -
                                  pointerDir * 0.025f;//pointerDir * 0.15f;
                 } else {
-                    pointerEnd = pointerStart + pointerDir * 10.0f;
+                    pointerEnd = pointerStart + pointerDir * 7.0f;//10.0
                 }
             }
 			if ( Ribbons[trDevice.GetHand()] != nullptr && valli_count < 1)
@@ -1422,7 +1422,7 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 	worldLayer.Header.Flags |= VRAPI_FRAME_LAYER_FLAG_CHROMATIC_ABERRATION_CORRECTION;
 
 	res.ClearColorBuffer = true;
-	res.ClearDepthBuffer = false;
+	res.ClearDepthBuffer = false; // TODO
 	res.ClearColor = Vector4f( 0.0f, 0.0f, 0.0f, 1.0f );	// solid alpha for underlay camera support
 
 	//------------------------------------------------------------------------------------------
