@@ -95,7 +95,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	}
 
 	Surface.geo.Create( attr, indices );
-	Surface.geo.primitiveType = GL_TRIANGLES;  // GL_POINTS;  // GL_LINES;  // TODO was GL_TRIANGLES
+	Surface.geo.primitiveType = GL_TRIANGLES;  // GL_POINTS;  // GL_LINES;  // To-Do was GL_TRIANGLES
 	Surface.geo.indexCount = 0;
 
 	// initialize the rest of the surface 
@@ -105,7 +105,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	ovrGraphicsCommand & gc = Surface.graphicsCommand;
 
 	Texture = CreateRibbonTexture();
-#if 0  // TODO was 1, set to 0 to disable texturing (as well as modifying the fragment shader
+#if 0  // To-Do was 1, set to 0 to disable texturing (see also how I modified the fragment shader)
 	gc.UniformData[0].Data = &Texture;
 
 	ovrProgramParm parms[] =
@@ -161,7 +161,7 @@ void ovrRibbon::AddPoint( ovrPointList & pointList, const ovrVector3f & point )
 	pointList.AddToTail( point );
 }
 
-void ovrRibbon::Update( const ovrPointList & pointList, const ovrMatrix4f & centerViewMatrix, const bool invertAlpha )
+void ovrRibbon::Update( const ovrPointList & pointList, const ovrMatrix4f & centerViewMatrix, const bool invertAlpha )  // TODO
 {
 	//OVR_LOG( "Update: this == %p", this );
 

@@ -305,7 +305,7 @@ void ovrParticleSystem::Frame( const ovrFrameInput & frame, const ovrTextureAtla
 	PackedAttr.Resize( 0 );
 	UpdateGeometry( SurfaceDef.geo, PackedAttr, Attr );
 #else
-	SurfaceDef.geo.Update( Attr );  // TODO
+	SurfaceDef.geo.Update( Attr );  // To-Do
 #endif
 }
 

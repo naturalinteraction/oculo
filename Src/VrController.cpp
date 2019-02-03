@@ -33,7 +33,7 @@ namespace OVR {
 #if defined( PERSISTENT_RIBBONS )
 static const int NUM_RIBBON_POINTS = 1024;
 #else
-static const int NUM_RIBBON_POINTS = 8;  // TODO was 32
+static const int NUM_RIBBON_POINTS = 8;  // To-Do was 32
 #endif
 
 static const Vector4f LASER_COLOR( 0.0f, 1.0f, 1.0f, 1.0f );
@@ -369,7 +369,7 @@ static inline Vector3f ovrMatrix4f_GetTranslation( const ovrMatrix4f & matrix )
 
 #if !defined( PERSISTENT_RIBBONS )
 static void UpdateRibbon( ovrPointList & points, ovrPointList & velocities, const Vector3f & anchorPos, const float maxDist, const float deltaSeconds )
-{
+{   // TODO UpdateRibbon
 	const Vector3f g( 0.0f, -9.8f, 0.0f );
 	const float invDeltaSeconds = 1.0f / deltaSeconds;
 
@@ -433,6 +433,7 @@ ovrControllerRibbon::ovrControllerRibbon( const int numPoints, const float width
 	: NumPoints( numPoints )
 	, Length( length )
 {
+	// TODO ribbon creation
 #if defined( PERSISTENT_RIBBONS )
 	Points = new ovrPointList_Circular( numPoints );
 #else
@@ -818,6 +819,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 
 		for ( int i = 0; i < ovrArmModel::HAND_MAX; ++i )
 		{
+		    OVR_LOG("CREATE RIBBON %d", i);
 			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 0.0f, 0.5f, 1.0f, 1.0f ) );
 		}
 
@@ -1376,7 +1378,7 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 
 			Matrix4f mat = Matrix4f( tracking.HeadPose.Pose );
 
-			// TODO: The pitch offset should only be applied to the Gear VR controller but should
+			// To-Do: The pitch offset should only be applied to the Gear VR controller but should
 			// be baked into the model.
 			float controllerPitch = DegreeToRad( 15.0f );
 #if defined( OVR_OS_ANDROID )
@@ -1400,25 +1402,21 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 			trDevice.UpdateHaptics( app->GetOvrMobile(), vrFrame );
 
 			// only do the trace for the user's dominant hand
-			if ( trDevice.GetHand() == dominantHand )
-			{
-				traceMat = mat;
-				pointerStart = traceMat.Transform( Vector3f( 0.0f ) );
-				pointerEnd = traceMat.Transform( Vector3f( 0.0f, 0.0f, -10.0f ) );
+			if ( trDevice.GetHand() == dominantHand ) {
+                traceMat = mat;
+                pointerStart = traceMat.Transform(Vector3f(0.0f));
+                pointerEnd = traceMat.Transform(Vector3f(0.0f, 0.0f, -10.0f));
 
-				Vector3f const pointerDir = ( pointerEnd - pointerStart ).Normalized();
-				HitTestResult hit = GuiSys->TestRayIntersection( pointerStart, pointerDir );
-				LaserHit = hit.HitHandle.IsValid();
-				if ( LaserHit )
-				{
-					pointerEnd = pointerStart + hit.RayDir * hit.t - pointerDir * 0.025f;//pointerDir * 0.15f;
-				}
-				else
-				{
-					pointerEnd = pointerStart + pointerDir * 10.0f;
-				}
-			}
-			// update ribbons
+                Vector3f const pointerDir = (pointerEnd - pointerStart).Normalized();
+                HitTestResult hit = GuiSys->TestRayIntersection(pointerStart, pointerDir);
+                LaserHit = hit.HitHandle.IsValid();
+                if (LaserHit) {
+                    pointerEnd = pointerStart + hit.RayDir * hit.t -
+                                 pointerDir * 0.025f;//pointerDir * 0.15f;
+                } else {
+                    pointerEnd = pointerStart + pointerDir * 10.0f;
+                }
+            }
 			if ( Ribbons[trDevice.GetHand()] != nullptr )
 			{
 				Ribbons[trDevice.GetHand()]->Update( res.FrameMatrices.CenterView,
