@@ -502,8 +502,10 @@ ovrVrController::~ovrVrController()
 {
 	for ( int i = 0; i < ovrArmModel::HAND_MAX; ++i )
 	{
-		delete Ribbons[i];
-		Ribbons[i] = nullptr;
+	    if (i == 0) {
+            delete Ribbons[i];
+            Ribbons[i] = nullptr;
+        }
 	}
 
 	delete ControllerModelGear;
@@ -798,12 +800,13 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 
 		//------------------------------------------------------------------------------------------
 
-		for ( int i = 0; i < ovrArmModel::HAND_MAX; ++i )
+		for ( int i = 0; i < 1/*ovrArmModel::HAND_MAX*/; ++i )
 		{
 		    OVR_LOG("CREATE RIBBON %d", i);     // how many          width   length          color
 		    // there is not only one, probably there's two, left and right hand
 		    // in my case the dominant hand is the right (1)
-			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 0.0f, 0.0f, 1.0f, 1.0f ) );
+			Ribbons[i] = new ovrControllerRibbon( NUM_RIBBON_POINTS, 0.025f, 1.0f, Vector4f( 1.0f, 0.0f, 0.0f, 1.0f ) );
+            Ribbons[i/*trDevice.GetHand()*/]->Update();
 		}
 
 		//------------------------------------------------------------------------------------------
@@ -1401,10 +1404,10 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
                     pointerEnd = pointerStart + pointerDir * 10.0f;
                 }
             }
-			if ( Ribbons[trDevice.GetHand()] != nullptr && valli_count <= NUM_RIBBON_POINTS * 12)
+			if ( Ribbons[trDevice.GetHand()] != nullptr && valli_count < 1)
 			{   valli_count++;
 			    OVR_LOG("ribboned handedness is %d valli_count %d", trDevice.GetHand(), valli_count);
-				Ribbons[1/*trDevice.GetHand()*/]->Update();
+				// Ribbons[1/*trDevice.GetHand()*/]->Update();
 			}
 		}
 	}
@@ -1527,9 +1530,9 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 			}
 		}
 		
-		if ( Ribbons[trDevice.GetHand()] != nullptr )
+		if ( i == 0/*Ribbons[trDevice.GetHand()] != nullptr*/ )
 		{
-			Ribbons[trDevice.GetHand()]->Ribbon->GenerateSurfaceList( res.Surfaces );
+			Ribbons[0/*trDevice.GetHand()*/]->Ribbon->GenerateSurfaceList( res.Surfaces );
 		}		
 	}
 
