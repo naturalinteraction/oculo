@@ -177,7 +177,7 @@ public:
 	ovrControllerRibbon( const int numPoints, const float width, const float length, const Vector4f & color );
 	~ovrControllerRibbon();
 
-	void Update( const Matrix4f & centerViewMatrix, const Vector3f & anchorPoint, const float deltaSeconds );
+	void Update();
 
 	ovrRibbon *		Ribbon = nullptr;
 	ovrPointList *	Points = nullptr;

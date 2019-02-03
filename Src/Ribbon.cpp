@@ -161,7 +161,7 @@ void ovrRibbon::AddPoint( ovrPointList & pointList, const ovrVector3f & point )
 	pointList.AddToTail( point );
 }
 
-void ovrRibbon::Update( const ovrPointList & pointList, const ovrMatrix4f & centerViewMatrix, const bool invertAlpha )  // TODO
+void ovrRibbon::Update( const ovrPointList & pointList, const bool invertAlpha )  // TODO
 {
 	//OVR_LOG( "Update: this == %p", this );
 
@@ -179,12 +179,12 @@ void ovrRibbon::Update( const ovrPointList & pointList, const ovrMatrix4f & cent
 	attr.uv0.Resize( numVerts );
 
 	//Vector3f eyePos( GetViewMatrixPosition( centerViewMatrix ) );
-	Vector3f eyeFwd( GetViewMatrixForward( centerViewMatrix ) );
+	// Vector3f eyeFwd( GetViewMatrixForward( centerViewMatrix ) );
 	int numQuads = 0;
 	int curEdge = 1;
 	int curIdx = pointList.GetFirst();
 	int nextIdx = pointList.GetNext( curIdx );
-
+/*
 	auto getEdgeDir2 = []( const Vector3f & eyeFwd, const Vector3f & cur, const Vector3f & next )
 	{
 		Vector3f dir = next - cur;
@@ -204,13 +204,17 @@ void ovrRibbon::Update( const ovrPointList & pointList, const ovrMatrix4f & cent
 			return Alg::Clamp( (float)curEdge / (float)( curPoints >> 1 ), 0.0f, 1.0f );
 		}
 	};
-
+*/
 	const Vector3f * curPoint = &pointList.Get( curIdx );
 	const Vector3f * nextPoint = &pointList.Get( nextIdx );
 
-	Vector3f edgeDir = getEdgeDir2( eyeFwd, *curPoint, *nextPoint );
-	float alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
-	
+	// Vector3f edgeDir = getEdgeDir2( eyeFwd, *curPoint, *nextPoint );
+	// float alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
+
+	Vector3f edgeDir(1.0, 1.0, -1.0);
+	edgeDir = edgeDir.Normalized();
+	float alpha = 1.0;
+
 	// cur edge
 	attr.position[(numQuads * 4) + 0] 	= *curPoint + (edgeDir * HalfWidth);
 	attr.color[(numQuads * 4) + 0]		= Vector4f( Color.x, Color.y, Color.z, alpha );
@@ -224,9 +228,9 @@ void ovrRibbon::Update( const ovrPointList & pointList, const ovrMatrix4f & cent
 		curPoint = &pointList.Get( curIdx );
 		nextPoint = &pointList.Get( nextIdx );
 
-		edgeDir = getEdgeDir2( eyeFwd, *curPoint, *nextPoint );
+		// edgeDir = getEdgeDir2( eyeFwd, *curPoint, *nextPoint );
 		curEdge++;
-		alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
+		// alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
 
 		// current quad next edge
 		attr.position[(numQuads * 4) + 2]	= *nextPoint + (edgeDir * HalfWidth * alpha );
@@ -246,7 +250,7 @@ void ovrRibbon::Update( const ovrPointList & pointList, const ovrMatrix4f & cent
 
 		numQuads++;
 
-		alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
+		// alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
 
 		// next quad first edge
 		attr.position[(numQuads * 4) + 0]	= *nextPoint + (edgeDir * HalfWidth * alpha );

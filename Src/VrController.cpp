@@ -359,7 +359,7 @@ static void SetObjectVisible( OvrGuiSys & guiSys, VRMenu * menu, char const * na
 		obj->SetVisible( visible );
 	}
 }
-
+/*
 static inline Vector3f ovrMatrix4f_GetTranslation( const ovrMatrix4f & matrix )
 {
 	ovrVector3f t;
@@ -368,24 +368,16 @@ static inline Vector3f ovrMatrix4f_GetTranslation( const ovrMatrix4f & matrix )
 	t.z = matrix.M[2][3];
 	return t;
 }
-
+*/
 #if !defined( PERSISTENT_RIBBONS )
-static void UpdateRibbon( ovrPointList & points, ovrPointList & velocities, const Vector3f & anchorPos, const float maxDist, const float deltaSeconds )
+static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 {   // TODO UpdateRibbon
-	const Vector3f g( 0.0f, -9.8f, 0.0f );
-	const float invDeltaSeconds = 1.0f / deltaSeconds;
-    OVR_LOG("points is full %d", points.IsFull());
-
 	int count = 0;
 	int i = points.GetFirst();
 	Vector3f & firstPoint = points.Get( i );
 
-	Vector3f delta = anchorPos - firstPoint;
-
 	firstPoint = anchorPos;	// move the first point
 	//translate( firstPoint, Vector3f( 0.0f, -1.0f, 0.0f ), deltaSeconds );
-
-	Vector3f prevPoint = firstPoint;
 
 	// move and accelerate all subsequent points
 	for ( ; ; )
@@ -399,29 +391,10 @@ static void UpdateRibbon( ovrPointList & points, ovrPointList & velocities, cons
 		count++;
 
 		Vector3f & curPoint = points.Get( i );
-		Vector3f & curVel = velocities.Get( i );
-		curVel += g * deltaSeconds;
-		curPoint = curPoint + curVel * deltaSeconds;
-
-		delta = curPoint - prevPoint;
-		const float dist = delta.Length();
-		Vector3f dir = delta * 1.0f / dist;
-		if ( dist > maxDist )
-		{
-			Vector3f newPoint = prevPoint + dir * maxDist;
-			Vector3f dragDelta = newPoint - curPoint;
-			Vector3f dragVel = dragDelta * invDeltaSeconds;
-			curVel = dragVel * 0.1f;
-			curPoint = newPoint;
-		}
-		else
-		{
-			// damping
-			curVel = curVel * 0.995f;
-		}
-
-		prevPoint = curPoint;
-	}
+        curPoint.x = anchorPos.x + 0.1 * count;
+        curPoint.y = anchorPos.y + 0.1 * count;
+        curPoint.z = anchorPos.z + 0.1 * count;
+    }
 
 OVR_LOG( "Ribbon: Updated %i points", count );
 }
@@ -465,9 +438,9 @@ ovrControllerRibbon::~ovrControllerRibbon()
 
 //==============================
 // ovrControllerRibbon::Update
-void ovrControllerRibbon::Update( const Matrix4f & centerViewMatrix, const Vector3f & anchorPos, const float deltaSeconds )
+void ovrControllerRibbon::Update()
 {
-    OVR_LOG("anchorPos %.1f, %.1f, %.1f", anchorPos.x, anchorPos.y, anchorPos.z);
+    // OVR_LOG("anchorPos %.1f, %.1f, %.1f", anchorPos.x, anchorPos.y, anchorPos.z);
     Vector3f anchorPos_forced;
     anchorPos_forced.x = 1.0;      // 0.0 is more of less in front of the user eyes, positive to the right
     anchorPos_forced.y = 1.675;     // check eye height 1.675000 is in front of the user eyes
@@ -492,9 +465,9 @@ void ovrControllerRibbon::Update( const Matrix4f & centerViewMatrix, const Vecto
 	}
 #else
 	OVR_ASSERT( Velocities != nullptr );
-	UpdateRibbon( *Points, *Velocities, anchorPos_forced, Length / Points->GetMaxPoints(), deltaSeconds );
+	UpdateRibbon( *Points, anchorPos_forced);
 #endif
-	Ribbon->Update( *Points, centerViewMatrix, true );
+	Ribbon->Update( *Points, true );
 }
 
 //==============================
@@ -1431,9 +1404,7 @@ ovrFrameResult ovrVrController::Frame( const ovrFrameInput & vrFrame )
 			if ( Ribbons[trDevice.GetHand()] != nullptr && valli_count <= NUM_RIBBON_POINTS * 12)
 			{   valli_count++;
 			    OVR_LOG("ribboned handedness is %d valli_count %d", trDevice.GetHand(), valli_count);
-				Ribbons[1/*trDevice.GetHand()*/]->Update( res.FrameMatrices.CenterView,
-					ovrMatrix4f_GetTranslation( mat ),
-					vrFrame.DeltaSeconds );
+				Ribbons[1/*trDevice.GetHand()*/]->Update();
 			}
 		}
 	}
