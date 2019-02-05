@@ -365,7 +365,7 @@ static inline Vector3f ovrMatrix4f_GetTranslation( const ovrMatrix4f & matrix )
 */
 
 static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
-{   // TODO UpdateRibbon
+{
 	int count = 0;
 	int i = points.GetFirst();
 	Vector3f & firstPoint = points.Get( i );
@@ -542,6 +542,34 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 	OVR_UNUSED( intentFromPackage );
 	OVR_UNUSED( intentJSON );
 	OVR_UNUSED( intentURI );
+
+	MemBufferT< uint8_t > parmBuffer;
+	if ( !app->GetFileSys().ReadFile( "apk:///assets/faces.csv", parmBuffer ) )
+	{
+		OVR_LOG( "fuck yyy Failed to load file!!" );
+	} else
+	{   // this is ridiculous: adding final 0 to make null terminated string
+		size_t newSize = parmBuffer.GetSize() + 1;
+		uint8_t * temp = new uint8_t[newSize];
+		memcpy( temp, static_cast< uint8_t* >( parmBuffer ), parmBuffer.GetSize() );
+		temp[parmBuffer.GetSize()] = 0;
+		parmBuffer.TakeOwnershipOfBuffer( *(void**)&temp, newSize );
+		// end of ridiculous section
+
+		uint8_t * temp2 = static_cast< uint8_t* >( parmBuffer );
+		OVR_LOG( "yyy fuck ok opened ok!! size %d buffer=%s", (int)parmBuffer.GetSize(),temp2);
+		float culo = -1.0;
+		char*data = (char*) temp2;
+		int offset;
+		int count = 0;
+
+		while (sscanf(data, " %f,%n", &culo, &offset) == 1)
+		{
+			data += offset;
+			OVR_LOG("yyy ribbon Read   |%f|      count %d\n", culo, count);
+			count++;
+		}
+	}
 
 	if ( intentType == INTENT_LAUNCH )
 	{
