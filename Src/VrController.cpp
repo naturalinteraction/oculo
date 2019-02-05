@@ -28,7 +28,7 @@ jlong Java_com_oculus_vrcontroller_MainActivity_nativeSetAppInterface( JNIEnv * 
 
 namespace OVR {
 
-static const int NUM_RIBBON_POINTS = 8;  // To-Do was 32
+static const int NUM_RIBBON_POINTS = 12;  // To-Do was 32
 
 static const Vector4f LASER_COLOR( 0.0f, 1.0f, 1.0f, 1.0f );
 
@@ -373,10 +373,25 @@ static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 	firstPoint = anchorPos;	// move the first point
 	//translate( firstPoint, Vector3f( 0.0f, -1.0f, 0.0f ), deltaSeconds );
 
+	float offx, offy, offz;
+	offx = offy = offz = 0.0;
 	// move and accelerate all subsequent points
 	for ( ; ; )
 	{
-		i = points.GetNext( i );
+        if (i % 3 == 0)
+            offx += 0.1;
+        if (i % 3 == 1)
+            offy += 0.1;
+        if (i % 3 == 2)
+            offz += 0.1;
+
+        Vector3f & curPoint = points.Get( i );
+        curPoint.x = anchorPos.x + offx;
+        curPoint.y = anchorPos.y + offy;
+        curPoint.z = anchorPos.z + offz;
+        OVR_LOG("%d curPoint %.1f %.1f %.1f", i, curPoint.x, curPoint.y, curPoint.z);
+
+        i = points.GetNext( i );
 		if ( i < 0 )
 		{
 			break;
@@ -384,10 +399,7 @@ static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 
 		count++;
 
-		Vector3f & curPoint = points.Get( i );
-        curPoint.x = anchorPos.x + 0.0 * count;
-        curPoint.y = anchorPos.y + 0.0 * count;
-        curPoint.z = anchorPos.z + 0.1 * count;
+
     }
 
 OVR_LOG( "Ribbon: Updated %i points", count );

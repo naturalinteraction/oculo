@@ -29,7 +29,6 @@ public:
 	void GenerateSurfaceList( Array< ovrDrawSurface > & surfaceList ) const;
 
 private:
-	float 							HalfWidth;	
 	Vector4f 						Color;
 	ovrSurfaceDef					Surface;
 	GlTexture						Texture;
