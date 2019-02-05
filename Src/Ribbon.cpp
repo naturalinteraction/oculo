@@ -68,6 +68,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 {
     // initialize the surface geometry
 	const int maxPoints = pointList.GetMaxPoints();
+	OVR_LOG("max points %d", maxPoints);
 	const int maxTris = ( maxPoints - 1 );
 	const int numVerts = maxTris * 3;
 	
@@ -193,7 +194,7 @@ void ovrRibbon::Update( const ovrPointList & pointList, const bool invertAlpha )
         const Vector3f * curPoint = &pointList.Get( curIdx );
         curPoint = &pointList.Get( curIdx );
 
-        OVR_LOG("%d cva %.1f, %.1f, %.1f", numV, curPoint->x, curPoint->y, curPoint->z);
+        // OVR_LOG("%d cva %.1f, %.1f, %.1f", numV, curPoint->x, curPoint->y, curPoint->z);
 
 		attr.position[(numV)]	= *curPoint;
 		attr.color[(numV)]		= Vector4f( Color.x, Color.y, Color.z, alpha );

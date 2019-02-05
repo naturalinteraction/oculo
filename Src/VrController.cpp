@@ -28,7 +28,7 @@ jlong Java_com_oculus_vrcontroller_MainActivity_nativeSetAppInterface( JNIEnv * 
 
 namespace OVR {
 
-static const int NUM_RIBBON_POINTS = 12;  // To-Do was 32
+static const int NUM_RIBBON_POINTS = 3 * 1000 * 10;  // To-Do was 32
 
 static const Vector4f LASER_COLOR( 0.0f, 1.0f, 1.0f, 1.0f );
 
@@ -379,17 +379,17 @@ static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
 	for ( ; ; )
 	{
         if (i % 3 == 0)
-            offx += 0.1;
-        if (i % 3 == 1)
-            offy += 0.1;
+            offx += 0.01;
+        if (i % 3 == 01)
+            offy += 0.01;
         if (i % 3 == 2)
-            offz += 0.1;
+            offz += 0.01;
 
         Vector3f & curPoint = points.Get( i );
         curPoint.x = anchorPos.x + offx;
         curPoint.y = anchorPos.y + offy;
         curPoint.z = anchorPos.z + offz;
-        OVR_LOG("%d curPoint %.1f %.1f %.1f", i, curPoint.x, curPoint.y, curPoint.z);
+        // OVR_LOG("%d curPoint %.1f %.1f %.1f", i, curPoint.x, curPoint.y, curPoint.z);
 
         i = points.GetNext( i );
 		if ( i < 0 )
