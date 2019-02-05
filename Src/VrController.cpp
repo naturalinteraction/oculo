@@ -750,6 +750,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 		{
 			MaterialParms materialParms;
 			materialParms.UseSrgbTextureFormats = false;
+			/*
 			const char * sceneUri = "apk:///assets/box.ovrscene";
 			SceneModel = LoadModelFile( app->GetFileSys(), sceneUri, Scene.GetDefaultGLPrograms(), materialParms );
 			//SceneModel = nullptr;
@@ -761,8 +762,9 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
 				modelOffset.x = 0.5f;
 				modelOffset.y = 0.0f;
 				modelOffset.z = -2.25f;
-				Scene.GetWorldModel()->State.SetMatrix( /*Matrix4f::Scaling( 2.5f, 2.5f, 2.5f ) * */ Matrix4f::Translation( modelOffset ) );
+				Scene.GetWorldModel()->State.SetMatrix(  Matrix4f::Scaling( 2.5f, 2.5f, 2.5f ) *  Matrix4f::Translation( modelOffset ) );
 			}
+			*/
 		}
 
 		//------------------------------------------------------------------------------------------
