@@ -174,7 +174,7 @@ class ovrControllerRibbon
 {
 public:
 	ovrControllerRibbon() = delete;
-	ovrControllerRibbon( const int numPoints, const float width, const float length, const Vector4f & color );
+	ovrControllerRibbon( const int numPoints, const float width, const float length, const Vector4f & color, App*app );
 	~ovrControllerRibbon();
 
 	void Update();

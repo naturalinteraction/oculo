@@ -14,6 +14,9 @@ Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All
 #include "GlTexture.h"
 #include "VrCommon.h"
 
+#include "App.h"
+#include "OVR_FileSys.h"
+
 namespace OVR {
 
 static const char* ribbonVertexShader = R"=====(
@@ -63,9 +66,39 @@ static GlTexture CreateRibbonTexture()
 	return glTexture;
 }
 
-ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const Vector4f & color )
+ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const Vector4f & color, App*app )
 	: Color( color )
 {
+	fucking_app = app;
+    MemBufferT< uint8_t > parmBuffer;
+    if ( !fucking_app->GetFileSys().ReadFile( "apk:///assets/faces.csv", parmBuffer ) )
+    {
+        OVR_LOG( "fuck yyy Failed to load file!!" );
+    } else
+    {   // this is ridiculous: adding final 0 to make null terminated string
+        //size_t newSize = parmBuffer.GetSize() + 1;
+        //uint8_t * temp = new uint8_t[newSize];
+        //memcpy( temp, static_cast< uint8_t* >( parmBuffer ), parmBuffer.GetSize() );
+        //temp[parmBuffer.GetSize()] = 0;
+        //parmBuffer.TakeOwnershipOfBuffer( *(void**)&temp, newSize );
+        // end of ridiculous section
+
+        uint8_t * temp2 = static_cast< uint8_t* >( parmBuffer );
+        OVR_LOG( "yyy fuck ok opened ok!! size %d buffer=%s", (int)parmBuffer.GetSize(),temp2);
+        float culo = -1.0;
+        char*data = (char*) temp2;
+        int offset;
+        int count = 0;
+
+        while (sscanf(data, " %f,%n", &culo, &offset) == 1)
+        {
+            data += offset;
+            OVR_LOG("yyy ribbon Read   |%f|      count %d\n", culo, count);
+            count++;
+        }
+    }
+
+
     // initialize the surface geometry
 	const int maxPoints = pointList.GetMaxPoints();
 	OVR_LOG("max points %d", maxPoints);
