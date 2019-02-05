@@ -364,47 +364,6 @@ static inline Vector3f ovrMatrix4f_GetTranslation( const ovrMatrix4f & matrix )
 }
 */
 
-static void UpdateRibbon( ovrPointList & points, const Vector3f & anchorPos)
-{
-	int count = 0;
-	int i = points.GetFirst();
-	Vector3f & firstPoint = points.Get( i );
-
-	firstPoint = anchorPos;	// move the first point
-	//translate( firstPoint, Vector3f( 0.0f, -1.0f, 0.0f ), deltaSeconds );
-
-	float offx, offy, offz;
-	offx = offy = offz = 0.0;
-	// move and accelerate all subsequent points
-	for ( ; ; )
-	{
-        if (i % 3 == 0)
-            offx += 0.01;
-        if (i % 3 == 01)
-            offy += 0.01;
-        if (i % 3 == 2)
-            offz += 0.01;
-
-        Vector3f & curPoint = points.Get( i );
-        curPoint.x = anchorPos.x + offx;
-        curPoint.y = anchorPos.y + offy;
-        curPoint.z = anchorPos.z + offz;
-        // OVR_LOG("%d curPoint %.1f %.1f %.1f", i, curPoint.x, curPoint.y, curPoint.z);
-
-        i = points.GetNext( i );
-		if ( i < 0 )
-		{
-			break;
-		}
-
-		count++;
-
-
-    }
-
-OVR_LOG( "Ribbon: Updated %i points", count );
-}
-
 //==============================================================================================
 // ovrControllerRibbon
 
@@ -441,16 +400,6 @@ ovrControllerRibbon::~ovrControllerRibbon()
 // ovrControllerRibbon::Update
 void ovrControllerRibbon::Update()
 {
-    // OVR_LOG("anchorPos %.1f, %.1f, %.1f", anchorPos.x, anchorPos.y, anchorPos.z);
-    Vector3f anchorPos_forced;
-    anchorPos_forced.x = 1.0;      // 0.0 is more of less in front of the user eyes, positive to the right
-    anchorPos_forced.y = 1.675;     // check eye height 1.675000 is in front of the user eyes
-    anchorPos_forced.z = -1.0;     // user is in 0.0, positive values are behind viewer
-	OVR_ASSERT( Points != nullptr );
-
-	OVR_ASSERT( Velocities != nullptr );
-	UpdateRibbon( *Points, anchorPos_forced);
-	Ribbon->Update( *Points, true );
 }
 
 //==============================

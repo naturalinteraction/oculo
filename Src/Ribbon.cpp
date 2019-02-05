@@ -69,7 +69,8 @@ static GlTexture CreateRibbonTexture()
 ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const Vector4f & color, App*app )
 	: Color( color )
 {
-	fucking_app = app;
+    std::vector<float> coords;
+    fucking_app = app;
     MemBufferT< uint8_t > parmBuffer;
     if ( !fucking_app->GetFileSys().ReadFile( "apk:///assets/faces.csv", parmBuffer ) )
     {
@@ -84,26 +85,30 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
         // end of ridiculous section
 
         uint8_t * temp2 = static_cast< uint8_t* >( parmBuffer );
-        OVR_LOG( "yyy fuck ok opened ok!! size %d buffer=%s", (int)parmBuffer.GetSize(),temp2);
-        float culo = -1.0;
+        OVR_LOG( "yyy fuck ok opened ok!! size %d", (int)parmBuffer.GetSize()/*,temp2*/);
+        float coord;
         char*data = (char*) temp2;
         int offset;
         int count = 0;
 
-        while (sscanf(data, " %f,%n", &culo, &offset) == 1)
+        while (sscanf(data, " %f,%n", &coord, &offset) == 1)
         {
+            coords.push_back(coord);
             data += offset;
-            OVR_LOG("yyy ribbon Read   |%f|      count %d\n", culo, count);
+            // OVR_LOG("yyy ribbon Read   |%f|      count %d\n", coord, count);
             count++;
         }
+        OVR_LOG( "yyy vector size %ld count=%d first=%f last =%f", coords.size(), count, coords.at(0), coords.back());
+        // for(int n : coords) {
+        //     std::cout << n << '\n';
     }
 
-
     // initialize the surface geometry
-	const int maxPoints = pointList.GetMaxPoints();
-	OVR_LOG("max points %d", maxPoints);
-	const int maxTris = ( maxPoints - 1 );
-	const int numVerts = maxTris * 3;
+	//const int maxPoints = pointList.GetMaxPoints();
+	//OVR_LOG("max points %d", maxPoints);
+	//const int maxTris = ( maxPoints - 1 );
+	const int numVerts = coords.size() / 3;
+    OVR_LOG("yyy numVerts = %d", numVerts);
 	
 	VertexAttribs attr;
 	attr.position.Resize( numVerts );
@@ -111,18 +116,12 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	attr.uv0.Resize( numVerts );
 
 	// the indices will never change
-	const int numIndices = maxTris * 3;
+	const int numIndices = numVerts;
 	Array< TriangleIndex> indices;
 	indices.Resize( numIndices );
 	// so we can just set them up at initialization time
-	TriangleIndex v = 0;
-	for ( int i = 0; i < maxTris; ++i )
-	{
-		indices[i * 3 + 0] = v + 0;
-		indices[i * 3 + 1] = v + 1;
-		indices[i * 3 + 2] = v + 2;
-		v += 3;
-	}
+	for ( int i = 0; i < numVerts; ++i )
+	    indices[i] = (TriangleIndex)i;
 
 	Surface.geo.Create( attr, indices );
 	Surface.geo.primitiveType = GL_TRIANGLES;
@@ -162,6 +161,8 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	gpu.blendSrcAlpha = GL_SRC_ALPHA;
 	gpu.blendDstAlpha = GL_ONE_MINUS_SRC_ALPHA;
 	gpu.cullEnable = false; // TODO true;
+
+	Update(coords);
 }
 
 ovrRibbon::~ovrRibbon()
@@ -175,73 +176,39 @@ void ovrRibbon::AddPoint( ovrPointList & pointList, const ovrVector3f & point )
 {
 }
 
-void ovrRibbon::Update( const ovrPointList & pointList, const bool invertAlpha )  // TODO
+void ovrRibbon::Update(std::vector<float> &coords )  // TODO
 {
-	if ( pointList.GetCurPoints() <= 1 )
-	{
-		//OVR_LOG( "Ribbon: empty" );
-		return;
-	}
-
-	//Vector3f eyePos( GetViewMatrixPosition( centerViewMatrix ) );
-	// Vector3f eyeFwd( GetViewMatrixForward( centerViewMatrix ) );
-/*
-	auto getEdgeDir2 = []( const Vector3f & eyeFwd, const Vector3f & cur, const Vector3f & next )
-	{
-		Vector3f dir = next - cur;
-		Vector3f proj = ( dir - ( eyeFwd * dir.Dot( eyeFwd ) ) ).Normalized();
-		Vector3f cross = proj.Cross( eyeFwd );
-		return cross;
-	};
-
-	auto calcAlpha = []( const int curEdge, const int curPoints, const bool invertAlpha )
-	{
-		if ( invertAlpha )
-		{
-			return 1.0f - Alg::Clamp( (float)( curEdge >> 1 ) / (float)( curPoints ), 0.0f, 1.0f );
-		}
-		else
-		{
-			return Alg::Clamp( (float)curEdge / (float)( curPoints >> 1 ), 0.0f, 1.0f );
-		}
-	};
-*/
-    // Vector3f edgeDir = getEdgeDir2( eyeFwd, *curPoint, *nextPoint );
-    // float alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
-    //Vector3f edgeDir(0.0, 1.0, 0.0);
-    //edgeDir = edgeDir.Normalized();
-
     VertexAttribs attr;
-    const int curPoints = pointList.GetCurPoints();
-    const int numVerts = ( curPoints ) * 1;
+
+    const int numVerts = coords.size() / 3;
+
     attr.position.Resize( numVerts );
     attr.color.Resize( numVerts );
     attr.uv0.Resize( numVerts );
+
     int numV = 0;
-    int curIdx = pointList.GetFirst();
 
 	float alpha = 1.0;
 
+    Vector3f curPoint;
+
 	for ( ; ; )
 	{
-        const Vector3f * curPoint = &pointList.Get( curIdx );
-        curPoint = &pointList.Get( curIdx );
+        curPoint.x = coords.at(numV * 3 + 0) / 30.0 + 1.0;
+        curPoint.y = coords.at(numV * 3 + 2) / 30.0 + 1.275;
+        curPoint.z = -coords.at(numV * 3 + 1) / 30.0 - 2.0;
 
         // OVR_LOG("%d cva %.1f, %.1f, %.1f", numV, curPoint->x, curPoint->y, curPoint->z);
 
-		attr.position[(numV)]	= *curPoint;
+		attr.position[(numV)]	= curPoint;
 		attr.color[(numV)]		= Vector4f( Color.x, Color.y, Color.z, alpha );
         attr.uv0[(numV)] 		= OVR::Vector2f( 1.0f, 0.0f );
 
-		curIdx = pointList.GetNext( curIdx );
-		if ( curIdx < 0 )
-		{
-			break;
-		}
-
 		numV++;
-
-		// alpha = calcAlpha( curEdge, pointList.GetCurPoints(), invertAlpha );
+        if ( numV * 3 >= (int)coords.size())
+        {
+            break;
+        }
 	}
 
 	// update the vertices
