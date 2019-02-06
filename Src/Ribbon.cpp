@@ -20,51 +20,70 @@ Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All
 namespace OVR {
 
 static const char* ribbonVertexShader = R"=====(
-	attribute vec4 Position;
+	attribute lowp vec4 Position;
+	attribute lowp vec3 Normal;
 	attribute vec4 VertexColor;
-	attribute vec2 TexCoord;
 	varying lowp vec4 outColor;
-	varying highp vec2 oTexCoord;
+    varying lowp vec3 oEye;
+	varying lowp vec3 oNormal;
+    vec3 multiply( mat4 m, vec3 v )
+	{
+		return vec3(
+			m[0].x * v.x + m[1].x * v.y + m[2].x * v.z,
+			m[0].y * v.x + m[1].y * v.y + m[2].y * v.z,
+			m[0].z * v.x + m[1].z * v.y + m[2].z * v.z );
+	}
+	vec3 transposeMultiply( mat4 m, vec3 v )
+	{
+		return vec3(
+			m[0].x * v.x + m[0].y * v.y + m[0].z * v.z,
+			m[1].x * v.x + m[1].y * v.y + m[1].z * v.z,
+			m[2].x * v.x + m[2].y * v.y + m[2].z * v.z );
+	}
 	void main()
 	{
 		gl_Position = TransformVertex( Position );
-		oTexCoord = TexCoord;
+        vec3 eye = transposeMultiply( sm.ViewMatrix[VIEW_ID], -vec3( sm.ViewMatrix[VIEW_ID][3] ) );
+		oEye = eye - vec3( ModelMatrix * Position );
+		oNormal = multiply( ModelMatrix, Normal );
 		outColor = VertexColor;
 	}
 )=====";
 
 static const char* ribbonFragmentShader = R"=====(
-	uniform sampler2D Texture0;
 	varying lowp vec4 outColor;
-	varying highp vec2 oTexCoord;
+    varying lowp vec3 oEye;
+	varying lowp vec3 oNormal;
+    uniform lowp vec3 SpecularLightDirection;
+	uniform lowp vec3 SpecularLightColor;
+	uniform lowp vec3 AmbientLightColor;
 	void main()
 	{
-		// gl_FragColor = outColor * texture2D( Texture0, oTexCoord );
-		gl_FragColor = outColor;
+		lowp vec3 eyeDir = normalize( oEye.xyz );
+		lowp vec3 Normal = normalize( oNormal );
+		lowp vec3 reflectionDir = dot( eyeDir, Normal ) * 2.0 * Normal - eyeDir;
+		lowp vec4 diffuse = outColor;
+		lowp vec3 ambientValue = diffuse.xyz * AmbientLightColor;
+
+		lowp float nDotL = max( dot( Normal , SpecularLightDirection ), 0.0 );
+		lowp vec3 diffuseValue = diffuse.xyz * SpecularLightColor * nDotL;
+
+		lowp float specularPower = 1.0f - diffuse.a;
+		specularPower = specularPower * specularPower;
+
+		lowp vec3 H = normalize( SpecularLightDirection + eyeDir );
+		lowp float nDotH = max( dot( Normal, H ), 0.0 );
+		lowp float specularIntensity = pow( nDotH, 64.0f * ( specularPower ) ) * specularPower;
+		lowp vec3 specularValue = specularIntensity * SpecularLightColor;
+
+		lowp vec3 controllerColor = diffuseValue + ambientValue + specularValue;
+        gl_FragColor.xyz = controllerColor;
+        //gl_FragColor.xyz = diffuse.xyz;
+        gl_FragColor.w = 1.0f;
 	}
 )=====";
 //==============================================================================================
 // ovrRibbon
-
-static GlTexture CreateRibbonTexture()
-{
-	const int TEX_WIDTH = 64;
-	const int TEX_HEIGHT = 64;
-	const int TEX_SIZE = TEX_WIDTH * TEX_HEIGHT;
-	uint32_t * tex = new uint32_t[TEX_SIZE];
-	for ( int y = 0; y < TEX_HEIGHT; ++y )
-	{
-		const uint32_t alpha = ( y < 16 ) ? y * 16 : ( y > 48 ) ? ( TEX_HEIGHT - y ) * 16 : 0xff;
-		const uint32_t color = ( alpha << 24 ) | 0xffffff;
-		for ( int x = 0; x < TEX_WIDTH; ++x )
-		{
-			tex[( y * TEX_WIDTH ) + x] = color;
-		}
-	}	
-	GlTexture glTexture = LoadRGBATextureFromMemory( reinterpret_cast< uint8_t*>( tex ), TEX_WIDTH, TEX_HEIGHT, false );	
-	delete [] tex;
-	return glTexture;
-}
 
 ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const Vector4f & color, App*app )
 	: Color( color )
@@ -98,7 +117,7 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
             // OVR_LOG("yyy ribbon Read   |%f|      count %d\n", coord, count);
             count++;
         }
-        OVR_LOG( "yyy vector size %ld count=%d first=%f last =%f", coords.size(), count, coords.at(0), coords.back());
+        OVR_LOG( "yyy vector size %lu count=%d first=%f last =%f", coords.size(), count, coords.at(0), coords.back());
         // for(int n : coords) {
         //     std::cout << n << '\n';
     }
@@ -112,13 +131,12 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 	
 	VertexAttribs attr;
 	attr.position.Resize( numVerts );
+    attr.normal.Resize( numVerts );
 	attr.color.Resize( numVerts );
-	attr.uv0.Resize( numVerts );
 
 	// the indices will never change
-	const int numIndices = numVerts;
 	Array< TriangleIndex> indices;
-	indices.Resize( numIndices );
+	indices.Resize( numVerts );
 	// so we can just set them up at initialization time
 	for ( int i = 0; i < numVerts; ++i )
 	    indices[i] = (TriangleIndex)i;
@@ -133,20 +151,23 @@ ovrRibbon::ovrRibbon( const ovrPointList & pointList, const float width, const V
 
 	ovrGraphicsCommand & gc = Surface.graphicsCommand;
 
-	Texture = CreateRibbonTexture();
-#if 0  // To-Do was 1, set to 0 to disable texturing (see also how I modified the fragment shader)
-	gc.UniformData[0].Data = &Texture;
+    static Vector3f SpecularLightDirection = Vector3f( 0.0f, -1.0f, 0.0f );
+    static Vector3f SpecularLightColor = Vector3f( 1.0f, 0.0f, 1.0f ) * 0.75f;
+    static Vector3f AmbientLightColor = Vector3f( 1.0f, 1.0f, 1.0f ) * 0.85f;
 
-	ovrProgramParm parms[] =
+    gc.UniformData[0].Data = &SpecularLightDirection;
+	gc.UniformData[1].Data = &SpecularLightColor;
+	gc.UniformData[2].Data = &AmbientLightColor;
+
+	static ovrProgramParm parms[] =
 	{
-		{ "Texture0",		ovrProgramParmType::TEXTURE_SAMPLED },
+		    { "SpecularLightDirection",	ovrProgramParmType::FLOAT_VECTOR3 },
+			{ "SpecularLightColor",		ovrProgramParmType::FLOAT_VECTOR3 },
+			{ "AmbientLightColor",		ovrProgramParmType::FLOAT_VECTOR3 },
 	};
 
-	gc.Program = GlProgram::Build( ribbonVertexShader, ribbonFragmentShader, &parms[0], sizeof( parms ) / sizeof( ovrProgramParm ) );
-#else
-	gc.Program = GlProgram::Build( ribbonVertexShader, ribbonFragmentShader, nullptr, 0 );
-#endif
-
+	gc.Program = GlProgram::Build( ribbonVertexShader, ribbonFragmentShader, parms, sizeof( parms ) / sizeof( ovrProgramParm ) );
+	
 	if ( !Surface.graphicsCommand.Program.IsValid() )
 	{
 		OVR_LOG( "Error building ribbon gpu program" );
@@ -183,32 +204,45 @@ void ovrRibbon::Update(std::vector<float> &coords )  // TODO
     const int numVerts = coords.size() / 3;
 
     attr.position.Resize( numVerts );
+    attr.normal.Resize( numVerts );
     attr.color.Resize( numVerts );
-    attr.uv0.Resize( numVerts );
 
-    int numV = 0;
+    Vector3f pA;
+    Vector3f pB;
+    Vector3f pC;
+    Vector3f cb;
+    Vector3f ab;
 
-	float alpha = 1.0;
+	for (unsigned int numTri = 0; numTri < coords.size() / 9; numTri++)
+    {
+        pA.x = coords.at(numTri * 9 + 0) / 30.0 + 1.0;
+        pA.y = coords.at(numTri * 9 + 2) / 30.0 + 1.275;
+        pA.z = -coords.at(numTri * 9 + 1) / 30.0 - 2.0;
 
-    Vector3f curPoint;
+        pB.x = coords.at(numTri * 9 + 3) / 30.0 + 1.0;
+        pB.y = coords.at(numTri * 9 + 5) / 30.0 + 1.275;
+        pB.z = -coords.at(numTri * 9 + 4) / 30.0 - 2.0;
 
-	for ( ; ; )
-	{
-        curPoint.x = coords.at(numV * 3 + 0) / 30.0 + 1.0;
-        curPoint.y = coords.at(numV * 3 + 2) / 30.0 + 1.275;
-        curPoint.z = -coords.at(numV * 3 + 1) / 30.0 - 2.0;
+        pC.x = coords.at(numTri * 9 + 6) / 30.0 + 1.0;
+        pC.y = coords.at(numTri * 9 + 8) / 30.0 + 1.275;
+        pC.z = -coords.at(numTri * 9 + 7) / 30.0 - 2.0;
 
-        // OVR_LOG("%d cva %.1f, %.1f, %.1f", numV, curPoint->x, curPoint->y, curPoint->z);
+        cb = pB - pC;
+        ab = pB - pA;
+        cb = cb.Cross(ab);
+        cb.Normalize();
 
-		attr.position[(numV)]	= curPoint;
-		attr.color[(numV)]		= Vector4f( Color.x, Color.y, Color.z, alpha );
-        attr.uv0[(numV)] 		= OVR::Vector2f( 1.0f, 0.0f );
+        attr.position[numTri * 3 + 0] = pA;
+        attr.normal[numTri * 3 + 0]   = cb;
+        attr.color[numTri * 3 + 0]    = Vector4f( Color.x, Color.y, Color.z, 1.0 );
 
-		numV++;
-        if ( numV * 3 >= (int)coords.size())
-        {
-            break;
-        }
+        attr.position[numTri * 3 + 1] = pB;
+        attr.normal[numTri * 3 + 1]   = cb;
+        attr.color[numTri * 3 + 1]    = Vector4f( Color.x, Color.y, Color.z, 1.0 );
+
+        attr.position[numTri * 3 + 2] = pC;
+        attr.normal[numTri * 3 + 2]   = cb;
+        attr.color[numTri * 3 + 2]    = Vector4f( Color.x, Color.y, Color.z, 1.0 );
 	}
 
 	// update the vertices

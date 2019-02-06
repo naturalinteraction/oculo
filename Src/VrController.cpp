@@ -785,7 +785,7 @@ void ovrVrController::EnteredVrMode( const ovrIntentType intentType, const char 
     OVR_LOG("fove %d", fove);
     if (fove == VRAPI_TRUE)
     {
-        vrapi_SetPropertyInt(app->GetJava(), VRAPI_FOVEATION_LEVEL, 0);  // 3
+        vrapi_SetPropertyInt(app->GetJava(), VRAPI_FOVEATION_LEVEL, 3);
         // 0 disables multi-resolution
         // 1 low FFR setting
         // 2 medium FFR setting
